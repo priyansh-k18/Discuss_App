@@ -13,16 +13,21 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "../ui/textarea"
 import { createPost } from "@/actions/create-post"
+import { useActionState } from "react"
 
-const PostCreateForm = () => {
-//   const [formState,action] = useActionState(createPost,{errors:{}})
+type CreatePostFormProps = {
+    slug:string
+}
+
+const PostCreateForm : React.FC<CreatePostFormProps> = ({slug}) => {
+  const [formState,action] = useActionState(createPost.bind(null,slug),{errors:{}})
   return (
     <Dialog>
       <DialogTrigger asChild>
         <Button>New Post</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
-        <form action={createPost}>
+        <form action={action}>
              <DialogHeader>
           <DialogTitle>Create a Post</DialogTitle>
           <DialogDescription>
@@ -34,15 +39,15 @@ const PostCreateForm = () => {
             <Label htmlFor="title">Title</Label>
             <Input id="title" name="title"/>
           </div>
-          {/* {formState.errors.name && <p className="text-sm text-red-600">{formState.errors.name}</p>} */}
+          {formState.errors.title && <p className="text-sm text-red-600">{formState.errors.title}</p>}
           <div>
             <Label htmlFor="content" className="text-right">
               Content
             </Label>
             <Textarea id="content" name="content"/>
           </div>
-          {/* {formState.errors.description && <p className="text-sm text-red-600">{formState.errors.description}</p>} */}
-          {/* {formState.errors.formError && <div className="border border-red-600 bg-red-200 p-2 rounded">{formState.errors.formError}</div>} */}
+          {formState.errors.content && <p className="text-sm text-red-600">{formState.errors.content}</p>}
+          {formState.errors.formError && <div className="border border-red-600 bg-red-200 p-2 rounded">{formState.errors.formError}</div>}
 
         </div>
         <DialogFooter>

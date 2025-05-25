@@ -14,7 +14,7 @@ const TopicShowPage:React.FC<TopicShowPageProps> = async({params}) => {
         <h1>{slug}</h1>
       </div>
       <div>
-        <PostCreateForm/>
+        <PostCreateForm slug = {slug}/>
       </div>
     </div>
   )

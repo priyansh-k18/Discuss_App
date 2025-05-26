@@ -1,4 +1,6 @@
+import PostList from '@/components/posts/Post-list';
 import PostCreateForm from '@/components/posts/PostCreateForm';
+import { fetchPostByTopicSlug } from '@/lib/query/post';
 
 import React from 'react'
 
@@ -9,9 +11,10 @@ type TopicShowPageProps = {
 const TopicShowPage:React.FC<TopicShowPageProps> = async({params}) => {
   const slug = (await params).slug;
   return (
-    <div className='flex justify-between mt-8 mx-8'>
-      <div>
-        <h1>{slug}</h1>
+    <div className='grid gird-cols-4 gap-4 p-4'>
+      <div className='col-span-3'>
+        <h1 className='font-bold text-2xl mb-2'>{slug}</h1>
+        <PostList fetchData = {() => fetchPostByTopicSlug(slug)}/>
       </div>
       <div>
         <PostCreateForm slug = {slug}/>

@@ -4,6 +4,7 @@ import CommentCreateForm from '@/components/comments/comment-create-form';
 import { ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import CommentList from '@/components/comments/comment-list';
 
 type PostShowPageProps = {
      params:Promise<{slug:string; postId:string}>
@@ -19,7 +20,8 @@ const PostShowPage : React.FC<PostShowPageProps> = async ({params}) => {
       Back to {slug}
       </Link>
       <PostShow postId = {postId}/>
-      <CommentCreateForm/>
+      <CommentCreateForm postId={postId} parentId={postId} startOpen/>
+      <CommentList postId={postId}/>
     </div>
   )
 }

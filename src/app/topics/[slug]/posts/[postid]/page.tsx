@@ -1,29 +1,32 @@
-import React from 'react'
-import PostShow from '@/components/posts/post-show';
-import CommentCreateForm from '@/components/comments/comment-create-form';
-import { ChevronLeft } from 'lucide-react';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import CommentList from '@/components/comments/comment-list';
+import CommentCreateForm from "@/components/comments/comment-create-form";
+import CommentList from "@/components/comments/comment-list";
+import PostShow from "@/components/posts/post-show";
+import { Button } from "@/components/ui/button";
+import { ChevronLeft } from "lucide-react";
+import Link from "next/link";
+import React, { Suspense } from "react";
 
 type PostShowPageProps = {
-     params:Promise<{slug:string; postId:string}>
-}
+  params: { slug: string; postId: string };
+};
 
-
-const PostShowPage : React.FC<PostShowPageProps> = async ({params}) => {
-  const {slug,postId} = (await params);
+const PostShowPage: React.FC<PostShowPageProps> = ({ params }) => {
+  const { slug, postId } =  params;
   return (
-    <div className='space-y-3'>
+    <div className="space-y-3">
       <Link href={`/topics/${slug}`}>
-      <Button variant={'link'}><ChevronLeft/></Button>
-      Back to {slug}
+        <Button variant={"link"}>
+          <ChevronLeft />
+          Back to {slug}
+        </Button>
       </Link>
-      <PostShow postId = {postId}/>
-      <CommentCreateForm postId={postId} parentId={postId} startOpen/>
-      <CommentList postId={postId}/>
+      <Suspense fallback={<p>Loading...</p>}>
+        <PostShow postId={postId} />
+      </Suspense>
+      <CommentCreateForm postId={postId} startOpen />
+      <CommentList postId={postId} />
     </div>
-  )
-}
+  );
+};
 
-export default PostShowPage
+export default PostShowPage;
